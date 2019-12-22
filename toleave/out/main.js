@@ -11,16 +11,16 @@ function print_score() {
         if (key == "I") {
             continue;
         }
+        var letter_div = document.createElement("div");
+        letter_div.className = "WavyLetter";
+        score.appendChild(letter_div);
         if (key in touched) {
-            score.innerText += "X";
+            letter_div.innerText = revealed_string[index];
         }
         else {
-            score.innerText += ".";
+            letter_div.innerText = "*";
         }
         index += 1;
-        if (index % 4 == 0) {
-            score.innerHTML += "<br />";
-        }
     }
 }
 function display_choice(text) {
@@ -53,30 +53,30 @@ var MyNode = /** @class */ (function () {
 var data = {
     "I": new MyNode().sp("I ").btn("felt").sp(" like I had to get ").btn("out").sp("."),
     "felt": new MyNode().sp("felt in ").btn("danger").sp(" and the ").btn("need").sp(" to protect myself"),
-    "out": new MyNode().sp("out of everything, I ").btn("think").sp(" this is the best ").btn("choice").sp("."),
-    "danger": new MyNode().sp("danger is a construct, like an ").btn("extreme").sp(" stress ").btn("avoidance").sp(" tactic"),
-    "need": new MyNode().sp("need to ").btn("stop").sp(" worrying about this ").btn("choice").sp(" I've made."),
-    "think": new MyNode().sp("think, think, think, that's all ").btn("I").sp(" do."),
-    "choice": new MyNode().sp("choice is an illusion, right? I ").btn("don't").sp(" ").btn("think").sp(" that matters."),
+    "out": new MyNode().sp("out of everything, this ").btn("seems").sp(" ").btn("best").sp("."),
+    "seems": new MyNode().sp("seems like ").btn("I").sp(" could be ").btn("making").sp(" a mistake."),
+    "best": new MyNode().sp("best for everyone, ").btn("I").sp(" ").btn("think"),
+    "danger": new MyNode().sp("danger is like an ").btn("extreme").sp(" stress ").btn("avoidance").sp(" tactic"),
+    "need": new MyNode().sp("need to ").btn("stop").sp(" worrying so ").btn("much").sp("."),
+    "much": new MyNode().sp("much ado ").btn("about").sp(" ").btn("nothing").sp("."),
+    "about": new MyNode().sp("about time I ").btn("trust").sp(" myself for ").btn("once").sp("."),
+    "think": new MyNode().sp("think, think, think, that's ").btn("all").sp(" ").btn("I").sp(" do."),
     "extreme": new MyNode().sp("extreme ").btn("behavior").sp(" doesn't ").btn("need").sp(" to be tolerated."),
-    "avoidance": new MyNode().sp("Avoidance is ").btn("making").sp(" it hard to ").btn("trust").sp(" my decision."),
+    "avoidance": new MyNode().sp("Avoidance is ").btn("making").sp(" it hard to ").btn("trust").sp(" ").btn("my").sp(" decision."),
     "stop": new MyNode().sp("stop thinking ").btn("about").sp(" it, please!"),
-    "don't": new MyNode().sp("don't know if ").btn("I").sp(" did the ").btn("best").sp(" thing for me..."),
-    "behavior": new MyNode().sp("behavior ").btn("change").sp(" isn't all or nothing, ").btn("I").sp(" ").btn("need").sp(" to be patient"),
-    "trust": new MyNode().sp("trust ").btn("will").sp(" be broken, that's a fact of ").btn("life").sp("."),
+    "behavior": new MyNode().sp("behavior ").btn("change").sp(" isn't ").btn("all").sp(" or ").btn("nothing").sp("."),
+    "all": new MyNode().sp("all ").btn("I").sp(" ").btn("want").sp(" is to love and be loved."),
+    "nothing": new MyNode().sp("nothing ").btn("seems").sp(" to be what I ").btn("need").sp("."),
+    "trust": new MyNode().sp("trust ").btn("will").sp(" never ").btn("last").sp("."),
     "will": new MyNode().sp("will I be present and ").btn("stop").sp(" thinking?"),
-    "change": new MyNode().sp("change is refuted with ").btn("avoidance").sp("."),
-    "making": new MyNode().sp("making a ").btn("commitment").sp(" to meditate so I can ").btn("trust").sp(" myself."),
-    "commitment": new MyNode().sp("commitment tends to ").btn("read").sp(" as ").btn("danger").sp(" unfortunately"),
-    "read": new MyNode().sp("read their ").btn("behavior").sp(" and ").btn("focus").sp(" on them."),
-    "focus": new MyNode().sp("focus on ").btn("making").sp(" this a ").btn("learning").sp(" experience."),
-    "learning": new MyNode().sp("learning is the ").btn("extreme").sp(" opposite of ").btn("avoidance"),
-    "best": new MyNode().sp("best to not ").btn("think").sp(" ").btn("about").sp(" it."),
-    "about": new MyNode().sp("about time ").btn("I").sp(" ").btn("stop").sp(" taking shit from people!"),
-    "life": new MyNode().sp("life is worth living, ").btn("I").sp(" ").btn("read").sp(" that somewhere ").btn("once").sp("."),
-    "once": new MyNode().sp("once ").btn("I").sp(" ").btn("get").sp(" some sleep the feeling ").btn("will").sp(" ").btn("change").sp("."),
-    "get": new MyNode().sp("get the ").btn("will").sp(" to make a ").btn("change")
+    "want": new MyNode().sp("want to be ").btn("my").sp(" friend?"),
+    "my": new MyNode().sp("my ").btn("behavior").sp(" isn't the ").btn("best").sp(" either..."),
+    "change": new MyNode().sp("change ").btn("will").sp(" always be denied by ").btn("avoidance").sp("."),
+    "making": new MyNode().sp("making ").btn("change").sp(" work is ").btn("all").sp(" ").btn("I").sp(" ").btn("want").sp(" to happen."),
+    "last": new MyNode().sp("last time this didn't work ").btn("out").sp(" the ").btn("best"),
+    "once": new MyNode().sp("once ").btn("I").sp(" get some sleep the feeling ").btn("will").sp(" ").btn("change").sp(".")
 };
+var revealed_string = "thoughtsarejustthoughts";
 var data_keys = [];
 for (var entry in data) {
     data_keys.push(entry);

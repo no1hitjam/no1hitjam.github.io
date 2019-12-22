@@ -11,6 +11,10 @@ p {
   line-height: 3em;
 }
 
+div {
+  padding-top: 2em;
+}
+
 button {
   font-family: 'IBM Plex Mono', monospace;
 }

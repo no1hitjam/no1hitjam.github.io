@@ -1,0 +1,16 @@
+body {
+  max-width: 100%; 
+  font-size: 1em;
+}
+
+p {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+#p {
+  line-height: 3em;
+}
+
+button {
+  font-family: 'IBM Plex Mono', monospace;
+}

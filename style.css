@@ -1,19 +1,31 @@
-h1 {font-family: 'Major Mono Display', monospace;}
-h2 {font-size: 1.3em;}
+h1 {
+  font-family: 'Major Mono Display', monospace;
+}
+h2 {
+  font-size: 1.3em;
+}
 body {
   padding: 1em; 
   font-family: 'Roboto', sans-serif;
   font-size: 0.9em;
-  max-width: 600px;
+  max-width: 50em;
 }
 li {
   padding: 0.2em;
 }
-a {color: #834600}
+a {
+  color: #834600
+}
 footer {
   padding-top: 5em;
   font-size: 0.7em;
 }
 footer img {
   padding-bottom: 0.5em;
+}
+
+@media screen and (max-width: 500px) {
+  body {
+    max-width: 100%;
+  }
 }

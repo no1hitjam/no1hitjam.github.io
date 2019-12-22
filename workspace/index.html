@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <style>
+      .WavyLetter {
+        display: table-cell;
+        vertical-align: top;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="WavyLetter">a</div>
+      <div class="WavyLetter">b</div>
+      <div class="WavyLetter">c</div>
+      <div class="WavyLetter">d</div>
+    </div>
+    <script type="text/javascript">
+      const refreshRate = 1000 / 60;
+      const height = 0.7;
+      let time = 0;
+      let container = document.getElementById('container');
+      function step() {
+        time += 1;
+        for (let i = 0; i < container.children.length; i++) {
+          pos = (Math.sin((time + i * 10) * 0.1) + 1.0) * height / 2.0;
+          container.children[i].style.lineHeight = pos + 'em';
+        }
+        window.requestAnimationFrame(step);
+      }
+      window.requestAnimationFrame(step);
+    </script>
+  </body>
+
+</html>

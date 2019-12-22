@@ -29,3 +29,8 @@ footer img {
     max-width: 100%;
   }
 }
+
+.WavyLetter {
+  display: inline-block;
+  vertical-align: top;
+}

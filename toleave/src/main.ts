@@ -1,43 +1,12 @@
-let h = document.getElementById("h");
-let p = document.getElementById("p");
-let score = document.getElementById("score");
+var h = document.getElementById("h");
+var p = document.getElementById("p");
+var score = document.getElementById("score");
 
-let message: string = 'Hello World';
-console.log(message);
-
-
-function print_score() {
-  score.innerText = "";
-  let index = 0;
-  for (let i = 0; i < data_keys.length; i++) {
-    let key = data_keys[i];
-    if (key == "I") {
-      continue;
-    }
-    let letter_div = document.createElement("div");
-    letter_div.className = "WavyLetter";
-    score.appendChild(letter_div);
-    if (key in touched) {
-      letter_div.innerText = revealed_string[index];
-    } else {
-      letter_div.innerText = "*"
-    }
-    index += 1;
-  }
-}
-
-function display_choice(text: string) {
-  while (p.childElementCount > 0) {
-    p.removeChild(p.lastChild);
-  }
-  touched[text] = true;
-  print_score();
-  p.appendChild(data[text].base);
-}
-
-class MyNode {
+class El {  // ement
   public base: Node;
-  constructor() {
+  public text: string;
+  constructor(text: string) {
+    this.text = text;
     this.base = document.createElement("span");
   }
 
@@ -51,49 +20,85 @@ class MyNode {
   btn(text: string) {
     let b = document.createElement("button");
     b.innerText = text;
-    b.setAttribute("onClick","display_choice(this.innerText)");
+    b.setAttribute("onClick","display(this.innerText)");
     this.base.appendChild(b);
     return this;
   }
 }
 
-var data = {
-  "I": new MyNode().sp("I ").btn("felt").sp(" like I had to get ").btn("out").sp("."),
-  "felt": new MyNode().sp("felt in ").btn("danger").sp(" and the ").btn("need").sp(" to protect myself"),
-  "out": new MyNode().sp("out of everything, this ").btn("seems").sp(" ").btn("best").sp("."),
-  "seems": new MyNode().sp("seems like ").btn("I").sp(" could be ").btn("making").sp(" a mistake."),
-  "best": new MyNode().sp("best for everyone, ").btn("I").sp(" ").btn("think"),
-  "danger": new MyNode().sp("danger is like an ").btn("extreme").sp(" stress ").btn("avoidance").sp(" tactic"),
-  "need": new MyNode().sp("need to ").btn("stop").sp(" worrying so ").btn("much").sp("."),
-  "much": new MyNode().sp("much ado ").btn("about").sp(" ").btn("nothing").sp("."),
-  "about": new MyNode().sp("about time I ").btn("trust").sp(" myself for ").btn("once").sp("."),
-  "think": new MyNode().sp("think, think, think, that's ").btn("all").sp(" ").btn("I").sp(" do."),
-  "extreme": new MyNode().sp("extreme ").btn("behavior").sp(" doesn't ").btn("need").sp(" to be tolerated."),
-  "avoidance": new MyNode().sp("Avoidance is ").btn("making").sp(" it hard to ").btn("trust").sp(" ").btn("my").sp(" decision."),
-  "stop": new MyNode().sp("stop thinking ").btn("about").sp(" it, please!"),
-  "behavior": new MyNode().sp("behavior ").btn("change").sp(" isn't ").btn("all").sp(" or ").btn("nothing").sp("."),
-  "all": new MyNode().sp("all ").btn("I").sp(" ").btn("want").sp(" is to love and be loved."),
-  "nothing": new MyNode().sp("nothing ").btn("seems").sp(" to be what I ").btn("need").sp("."),
-  "trust": new MyNode().sp("trust ").btn("will").sp(" never ").btn("last").sp("."), 
-  "will": new MyNode().sp("will I be present and ").btn("stop").sp(" thinking?"),
-  "want": new MyNode().sp("want to be ").btn("my").sp(" friend?"),
-  "my": new MyNode().sp("my ").btn("behavior").sp(" isn't the ").btn("best").sp(" either..."),
-  "change": new MyNode().sp("change ").btn("will").sp(" always be denied by ").btn("avoidance").sp("."),
-  "making": new MyNode().sp("making ").btn("change").sp(" work is ").btn("all").sp(" ").btn("I").sp(" ").btn("want").sp(" to happen."),
-  "last": new MyNode().sp("last time this didn't work ").btn("out").sp(" the ").btn("best"),
-  "once": new MyNode().sp("once ").btn("I").sp(" get some sleep the feeling ").btn("will").sp(" ").btn("change").sp("."),
-};
+const initial: string = "how";
+const data_raw: string[] = [];
 
-var revealed_string = "thoughtsarejustthoughts"
+var data = function () {
+  const delims = [" ", ",", ".", "!", "?", "'"];
+  // get all keys
+  let data = {};
+  for (let i = 0; i < data_raw.length; i++) {
+    let entry = data_raw[i];
+    let key_length: number = delims.map(s => entry.indexOf(s))
+      .reduce((prev, curr, _, __) => curr >= 0 && curr < prev ? curr : prev, entry.length);
+    let key: string = entry.substr(0, key_length);
+    data[key] = new El(entry);
+    console.log("{{" + key + ", " + key_length + "}}");
+    console.log(entry);
+  }
+  console.log(data);
+  // sequence by checking against keys
+  for (const key in data) {
+    let pin = 0;
+    for (let i = 1; i < data[key].text.length - key.length; i++) {
+      for (const other_key in data) {
+        if (data[key].text[i - 1] == " " 
+            && data[key].text.substr(i, other_key.length) == other_key
+            && delims.indexOf(data[key].text.substr(i + other_key.length, 1)) != -1) {
+          data[key].sp(data[key].text.substring(pin, i));
+          data[key].btn(other_key);
+          i += other_key.length;
+          pin = i;
+        }
+      }
+    }
+    data[key].sp(data[key].text.substring(pin));
+  }
+  return data;
+}();
 
-var data_keys = [];
-for (let entry in data) {
-  data_keys.push(entry);
-}
+var revealed_string = "thoughtsarejustthoughts......"
 
 var touched = {}
 
+
+function print_score() {
+  score.innerText = "";
+  let index = 0;
+  for (const key in data) {
+    if (key == initial) {
+      continue;
+    }
+    let letter_div = document.createElement("div");
+    letter_div.className = "WavyLetter";
+    score.appendChild(letter_div);
+    if (key in touched) {
+      letter_div.innerText = revealed_string[index];
+    } else {
+      letter_div.innerText = "*";
+      letter_div.style.color = "#888";
+    }
+    index += 1;
+  }
+}
+
+function display(text: string) {
+  while (p.childElementCount > 0) {
+    p.removeChild(p.lastChild);
+  }
+  touched[text] = true;
+  print_score();
+  p.appendChild(data[text].base);
+}
+
+
+
 h.textContent = "To Leave"
 
-
-display_choice("I");
+display("how");

@@ -1,14 +1,17 @@
 h1 {
-  font-family: 'Major Mono Display', monospace;
+  font-family: 'Roboto', sans-serif;
 }
 h2 {
   font-size: 1.2em;
 }
 body {
+  background-color: #eeeeee;
   padding: 1em; 
   font-family: 'Roboto', sans-serif;
-  font-size: 0.9em;
+  font-size: 0.8em;
   max-width: 50em;
+  line-height: 1.6;
+  margin: .5em 2em;
 }
 li {
   padding: 0.2em;

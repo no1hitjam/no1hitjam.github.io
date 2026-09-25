@@ -4,8 +4,11 @@ h1 {
 h2 {
   font-size: 1.2em;
 }
+html {
+  background-color: #c8c8c8;
+}
 body {
-  background-color: #eeeeee;
+  background-color: #c8c8c8;
   padding: 1em; 
   font-family: 'Roboto', sans-serif;
   font-size: 0.8em;

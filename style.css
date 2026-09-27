@@ -4,6 +4,67 @@ h1 {
 h2 {
   font-size: 1.2em;
 }
+#hello {
+  color: #834600;
+  cursor: pointer;
+  display: inline-block;
+}
+#hello.bounce {
+  animation: hello-bounce 0.45s ease;
+}
+@keyframes hello-bounce {
+  0%, 100% { transform: translateY(0); }
+  35% { transform: translateY(-0.4em); }
+  55% { transform: translateY(0); }
+  75% { transform: translateY(-0.15em); }
+}
+#leaves {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+.leaf {
+  position: absolute;
+  top: 0;
+  animation-name: leaf-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+.leaf-drift {
+  display: block;
+  animation: leaf-sway 2.2s ease-in-out infinite alternate;
+}
+.leaf-spin {
+  display: block;
+  animation: leaf-spin linear infinite;
+}
+.leaf-turn {
+  display: block;
+  animation: leaf-turn ease-in-out infinite alternate;
+}
+.leaf svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@keyframes leaf-fall {
+  from { transform: translateY(-3em); }
+  to { transform: translateY(105vh); }
+}
+@keyframes leaf-sway {
+  from { transform: translateX(-56px); }
+  to { transform: translateX(56px); }
+}
+@keyframes leaf-turn {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0.2); }
+}
+@keyframes leaf-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 html {
   background-color: #c8c8c8;
 }

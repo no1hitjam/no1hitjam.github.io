@@ -7,8 +7,9 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+<div id="leaves" aria-hidden="true"></div>
 <h1>Jackson Lango's web page</h1>
-<h2>Hello!</h2>
+<h2 id="hello">Hello!</h2>
 <ul>
   <li>
     I am a hobbyist <strong>painter</strong>, see <a href="https://www.instagram.com/moon_dude/">instagram.com/moon_dude</a>
@@ -29,6 +30,53 @@
   Font: 
   <a href="https://fonts.google.com/specimen/Roboto/">Roboto</a>
 </footer>
+<script>
+  const hello = document.getElementById('hello');
+  const leaves = document.getElementById('leaves');
+  let leavesFalling = false;
+  let leafTimer = 0;
+
+  function spawnLeaf(delay) {
+    const leaf = document.createElement('span');
+    leaf.className = 'leaf';
+    leaf.style.left = (Math.random() * 100) + '%';
+    leaf.style.width = (8 + Math.random() * 5) + 'px';
+    leaf.style.opacity = 0.4 + Math.random() * 0.6;
+    leaf.style.animationDuration = (16 + Math.random() * 8) + 's';
+    leaf.style.animationDelay = delay + 's';
+    leaf.innerHTML = '<span class="leaf-drift"><span class="leaf-spin"><span class="leaf-turn"><svg viewBox="0 0 24 32" aria-hidden="true"><path fill="#834600" d="M12 1c-1 6-7 10-8 18 0 6 4 11 8 12 4-1 8-6 8-12C19 11 13 7 12 1z"/></svg></span></span></span>';
+    const drift = leaf.firstElementChild;
+    const spin = drift.firstElementChild;
+    const turn = spin.firstElementChild;
+    drift.style.animationDuration = (3.5 + Math.random() * 2.5) + 's';
+    const spinDuration = 5 + Math.random() * 7;
+    spin.style.animationDuration = spinDuration + 's';
+    spin.style.animationDelay = (-Math.random() * spinDuration) + 's';
+    const turnDuration = 1.8 + Math.random() * 2.4;
+    turn.style.animationDuration = turnDuration + 's';
+    turn.style.animationDelay = (-Math.random() * turnDuration) + 's';
+    leaf.addEventListener('animationend', function (event) {
+      if (event.animationName === 'leaf-fall') leaf.remove();
+    });
+    leaves.appendChild(leaf);
+  }
+
+  hello.addEventListener('click', function () {
+    hello.classList.remove('bounce');
+    void hello.offsetWidth;
+    hello.classList.add('bounce');
+    if (leavesFalling) {
+      clearInterval(leafTimer);
+      leavesFalling = false;
+      leaves.replaceChildren();
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    leavesFalling = true;
+    for (let i = 0; i < 7; i++) spawnLeaf(Math.random() * 1.2);
+    leafTimer = setInterval(function () { spawnLeaf(Math.random() * 0.4); }, 570);
+  });
+</script>
 </body>
 
 </html>
